@@ -1,0 +1,61 @@
+<html>
+<head>
+    <title>Arithmetic Operations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        input, button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Arithmetic operations (created by Shankar)</h1>
+    <p>Enter two values and choose an operation:</p>
+
+    <input type="number" id="value1" placeholder="Enter first value" required>
+    <input type="number" id="value2" placeholder="Enter second value" required><br><br>
+
+    <button onclick="calculate('add')">+</button>
+    <button onclick="calculate('subtract')">-</button>
+    <button onclick="calculate('multiply')">*</button>
+    <button onclick="calculate('divide')">/</button><br><br>
+
+    <h2>Result: <span id="result">--</span></h2>
+
+    <script>
+        function calculate(operation) {
+            const value1 = parseFloat(document.getElementById("value1").value);
+            const value2 = parseFloat(document.getElementById("value2").value);
+            let result;
+
+            if (isNaN(value1) || isNaN(value2)) {
+                result = "Please enter valid numbers!";
+            } else {
+                switch (operation) {
+                    case 'add':
+                        result = value1 + value2;
+                        break;
+                    case 'subtract':
+                        result = value1 - value2;
+                        break;
+                    case 'multiply':
+                        result = value1 * value2;
+                        break;
+                    case 'divide':
+                        result = value2 !== 0 ? value1 / value2 : "Cannot divide by zero!";
+                        break;
+                    default:
+                        result = "Unknown operation!";
+                }
+            }
+            document.getElementById("result").textContent = result;
+        }
+    </script>
+</body>
+</html>
