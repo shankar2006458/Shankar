@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multi-Function Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 30px;
+    }
+    input, button {
+      margin: 6px;
+      padding: 10px;
+      font-size: 16px;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    button:hover {
+      background-color: #f0f0f0;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Multi-Function Calculator</h2>
+  
+  <input type="number" id="num1" placeholder="Enter number 1">
+  <input type="number" id="num2" placeholder="Enter number 2 (if needed)">
+  <br>
+
+  <!-- Basic Arithmetic -->
+  <button onclick="calculate('+')">+</button>
+  <button onclick="calculate('-')">-</button>
+  <button onclick="calculate('*')">*</button>
+  <button onclick="calculate('/')">/</button>
+  <br>
+
+  <!-- Additional Functions -->
+  <button onclick="checkPrime()">Is Prime?</button>
+  <button onclick="checkPrimeRange()">Prime in Range</button>
+  <button onclick="checkEvenOdd()">Even or Odd?</button>
+
+  <h3 id="result">Result: </h3>
+
+  <script>
+    function calculate(operator) {
+      const num1 = parseFloat(document.getElementById('num1').value);
+      const num2 = parseFloat(document.getElementById('num2').value);
+      let result = '';
+
+      if (isNaN(num1) || isNaN(num2)) {
+        result = 'Enter valid numbers.';
+      } else {
+        switch(operator) {
+          case '+': result = num1 + num2; break;
+          case '-': result = num1 - num2; break;
+          case '*': result = num1 * num2; break;
+          case '/':  
+            result = num2 !== 0 ? num1 / num2 : 'Error: Cannot divide by zero';
+            break;
+        }
+      }
+      document.getElementById('result').innerText = `Result: ${result}`;
+    }
+
+    function isPrime(n) {
+      if (n <= 1) return false;
+      if (n === 2) return true;
+      for (let i = 2; i <= Math.sqrt(n); i++) {
+        if (n % i === 0) return false;
+      }
+      return true;
+    }
+
+    function checkPrime() {
+      const num = parseInt(document.getElementById('num1').value);
+      const result = isNaN(num) 
+        ? 'Enter a valid number.' 
+        : isPrime(num) ? `${num} is a Prime Number.` : `${num} is NOT a Prime Number.`;
+      document.getElementById('result').innerText = result;
+    }
+
+    function checkPrimeRange() {
+      const start = parseInt(document.getElementById('num1').value);
+      const end = parseInt(document.getElementById('num2').value);
+      
+      if (isNaN(start) || isNaN(end) || start > end) {
+        document.getElementById('result').innerText = 'Enter a valid range.';
+        return;
+      }
+
+      let primes = [];
+      for (let i = start; i <= end; i++) {
+        if (isPrime(i)) primes.push(i);
+      }
+
+      document.getElementById('result').innerText = 
+        `Primes from ${start} to ${end}: ${primes.length > 0 ? primes.join(', ') : 'None'}`;
+    }
+
+    function checkEvenOdd() {
+      const num = parseInt(document.getElementById('num1').value);
+      const result = isNaN(num) 
+        ? 'Enter a valid number.' 
+        : (num % 2 === 0) ? `${num} is Even.` : `${num} is Odd.`;
+      document.getElementById('result').innerText = result;
+    }
+  </script>
+
+</body>
+</html>

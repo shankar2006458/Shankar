@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image to Link Generator</title>
+</head>
+<body>
+    <input type="file" id="imageInput" accept="image/*">
+    <button onclick="generateLink()">Generate Link</button>
+    <div id="output"></div>
+
+    <script>
+        function generateLink() {
+            const input = document.getElementById('imageInput');
+            const file = input.files[0];
+
+            if (!file) {
+                alert("Please select an image first.");
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const link = e.target.result;
+                document.getElementById('output').innerHTML =
+                    `<input type="text" id="imageLink" value="${link}" readonly style="width:90%">
+                     <button onclick="copyLink()">Copy</button>`;
+            };
+            reader.onerror = function() {
+                alert("Failed to read file!");
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function copyLink() {
+            const copyText = document.getElementById("imageLink");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); // For mobile devices
+            document.execCommand("copy");
+            alert("Copied the link!");
+        }
+    </script>
+</body>
+</html>
